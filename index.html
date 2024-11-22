@@ -79,17 +79,43 @@
         }
         @media (max-width: 480px) {
             .countdown-container {
-                padding: 1.5rem;
+                padding: 1rem;
+                width: 95%;
             }
             h1 {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
                 background-size: 300% auto;
             }
+            #countdown {
+                gap: 0.5rem;
+            }
+            .time-segment {
+                padding: 0.5rem;
+            }
             .time-value {
-                font-size: 1.8rem;
+                font-size: 1.4rem;
+                margin-bottom: 0.2rem;
             }
             .time-label {
-                font-size: 0.8rem;
+                font-size: 0.7rem;
+            }
+        }
+        @media (max-width: 350px) {
+            .countdown-container {
+                padding: 0.8rem;
+            }
+            .time-value {
+                font-size: 1.2rem;
+            }
+            .time-label {
+                font-size: 0.6rem;
+            }
+            #countdown {
+                gap: 0.3rem;
+            }
+            .time-segment {
+                padding: 0.4rem;
             }
         }
     </style>
