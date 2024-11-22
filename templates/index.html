@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown to Friday</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .countdown-container {
+            text-align: center;
+            padding: 3rem;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+            width: 90%;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            background: linear-gradient(
+                to right,
+                #ff0000,
+                #ffa500,
+                #ffff00,
+                #008000,
+                #0000ff,
+                #4b0082,
+                #ee82ee
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: rainbow 5s linear infinite;
+        }
+        @keyframes rainbow {
+            0% {
+                background-position: 0% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
+        }
+        #countdown {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .time-segment {
+            background: linear-gradient(145deg, #f0f0f0, #ffffff);
+            padding: 1rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .time-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #764ba2;
+            margin-bottom: 0.5rem;
+        }
+        .time-label {
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        @media (max-width: 480px) {
+            .countdown-container {
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+                background-size: 300% auto;
+            }
+            .time-value {
+                font-size: 1.8rem;
+            }
+            .time-label {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown-container">
+        <h1>Time Until Next Friday</h1>
+        <div id="countdown"></div>
+    </div>
+
+    <script>
+        function getNextFriday() {
+            let now = new Date();
+            let dayOfWeek = now.getDay();
+            let daysUntilFriday = 5 - dayOfWeek;
+            
+            if (daysUntilFriday <= 0) {
+                if (daysUntilFriday === 0 && now.getHours() < 16) {
+                    daysUntilFriday = 0;
+                } else {
+                    daysUntilFriday += 7;
+                }
+            }
+            
+            let nextFriday = new Date();
+            nextFriday.setDate(now.getDate() + daysUntilFriday);
+            nextFriday.setHours(16, 0, 0, 0);
+            return nextFriday;
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const nextFriday = getNextFriday();
+            const timeLeft = nextFriday - now;
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').innerHTML = `
+                <div class="time-segment">
+                    <div class="time-value">${days}</div>
+                    <div class="time-label">Days</div>
+                </div>
+                <div class="time-segment">
+                    <div class="time-value">${hours}</div>
+                    <div class="time-label">Hours</div>
+                </div>
+                <div class="time-segment">
+                    <div class="time-value">${minutes}</div>
+                    <div class="time-label">Minutes</div>
+                </div>
+                <div class="time-segment">
+                    <div class="time-value">${seconds}</div>
+                    <div class="time-label">Seconds</div>
+                </div>
+            `;
+        }
+
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html> 
